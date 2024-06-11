@@ -1,0 +1,25 @@
+<!-- base.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <!-- Otros meta tags, estilos, y scripts -->
+</head>
+<body>
+    <header>
+        <!-- Encabezado común -->
+    </header>
+        <div>
+            <main>
+                {% block content %}{% endblock %}
+            </main>
+
+        </div>
+    
+    
+    <footer>
+        <!-- Pie de página común -->
+    </footer>
+</body>
+</html>

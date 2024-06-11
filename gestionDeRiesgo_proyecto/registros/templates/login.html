@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+{% block content %}
+<body>
+    <div>
+        <h1>Inicio de Sesión</h1>
+    </div>
+    <div>
+        <div >
+            <form id="id_login_form" action="{% url 'login' %}" method="post">{% csrf_token %}
+                <div id="id_div_inicial">
+                    <div>
+                        <label for="usuario">USUARIO</label>
+                        <input type="text" name="usuario" id="id_usuario_input" placeholder="USUARIO">
+                    </div>
+                    <div>
+                        <label for="contraseña">CONTRASEÑA</label>
+                        <input type="password" name="contraseña" id="id_contraseña_input" placeholder="CONTRASEÑA">
+                    </div>
+                    
+                </div>
+                <div>
+                    <button type="submit">Iniciar Sesión</button>
+                </div>
+            </form>  
+            
+        </div>
+    </div>
+    <script src="{% static 'js/login.js' %}" ></script>
+</body>
+{% endblock %}
+</html>
