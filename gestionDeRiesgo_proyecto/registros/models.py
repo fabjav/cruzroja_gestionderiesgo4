@@ -101,8 +101,11 @@ class CambioContraseña(models.Model):
     es_admin = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'{self.user.name} - Primer login: {self.cambio}'
+        return f'{self.user.first_name} - Primer login: {self.cambio}'
     
 class UsuarioAdmin(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     contraseña_personal = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"{self.user.first_name} {self.user.last_name}"

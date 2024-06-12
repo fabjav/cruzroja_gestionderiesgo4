@@ -209,7 +209,7 @@ def validar_datos_login(request):
                         estado_p = '1'
                         user = request.user
                         contraseña_h = make_password(contraseña_personal)
-                        
+                        print(f"Contraseña hasheada: {contraseña_h}")
                         usuario_admin = UsuarioAdmin(user=user, contraseña_personal=contraseña_h )
                         usuario_admin.save()
                 else:
@@ -246,10 +246,7 @@ def validar_datos_login(request):
         return JsonResponse({'data': data})
     else:
         return JsonResponse({'error': 'Método no permitido'}, status=405)
-        
-           
-           
-      
+   
 
 '''
 @login_required
@@ -280,7 +277,6 @@ def admin_login(request):
 from django.contrib.auth.hashers import check_password
 
 
-
 @login_required
 def validar_datos_admin_login(request):
     if request.method == 'POST':
@@ -290,20 +286,17 @@ def validar_datos_admin_login(request):
         if user.is_authenticated:
             try:
                 usuario_admin = UsuarioAdmin.objects.get(user=user)
-                print(f"UsuarioAdmin encontrado: {usuario_admin}")  # Depuración
+                print(f"Contraseña almacenada (hash): {usuario_admin.contraseña_personal}")  # Depuración
                 if check_password(contraseña_personal, usuario_admin.contraseña_personal):
                     return redirect('index')
                 else:
                     print("Contraseña incorrecta")  # Depuración
                     return JsonResponse({'data': 'error'})
             except UsuarioAdmin.DoesNotExist:
-                print("UsuarioAdmin no existe")  # Depuración
-                return JsonResponse({'data': 'UsuarioAdmin no existe'}, status=404)
-        else:
-            print("Usuario no autenticado")  # Depuración
-            return JsonResponse({'data': 'Usuario no autenticado'}, status=401)
+                print("UsuarioAdmin no encontrado")  # Depuración
+                return JsonResponse({'data': 'error'})
     else:
-        return JsonResponse({'error': 'Método no permitido'}, status=405)
+        return JsonResponse({'data': 'invalid_request'})
 
 def index (request):
     return render(request, 'index.html')
