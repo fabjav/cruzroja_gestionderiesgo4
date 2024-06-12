@@ -79,6 +79,8 @@ def iniciarSesion(request):
                     tipo = '1'
                 elif cambio:
                     tipo = '2'
+                else:
+                    tipo = '3'
                 
                 return redirect(reverse('name_configuracion_inicial') +f'?tipo={tipo}')
             
@@ -177,11 +179,23 @@ def validar_datos_login(request):
                             contraseña = '''Las contraseñas coinciden.
                                             Contraseña cambiada con exito'''
                             estado_c = '1'
+                            user = request.user
+                            if user.is_authenticated:
+                                user.set_password(nueva_contraseña)
+                                user.save()
+                                
+                                usuario_cambio = CambioContraseña.objects.get(user=user)
+                            
+                                usuario_cambio.cambio = False
+                                usuario_cambio.save()
+                                print(usuario_cambio.cambio) 
                             
                     else:
                         contraseña = 'Por favor ingrese una confirmación de contraseña válida.'
+                        estado_c = '0'
             else:
                 contraseña = 'Por favor ingrese una contraseña válida.'
+                estado_c = '0'
                 
 
             # Validación de la contraseña personal
@@ -193,10 +207,16 @@ def validar_datos_login(request):
                         contraseña_p = '''Las contraseñas personales coinciden.
                                             Contraseña cambiada con exito'''
                         estado_p = '1'
+                        user = request.user
+                        contraseña_h = make_password(contraseña_personal)
+                        
+                        usuario_admin = UsuarioAdmin(user=user, contraseña_personal=contraseña_h )
+                        usuario_admin.save()
                 else:
                     contraseña_p = 'Por favor ingrese una confirmación de contraseña personal válida.'
             else:
                 contraseña_p = 'Por favor ingrese una contraseña personal válida.'
+                estado_p = '0'
                 
             
         elif tipo == '2':
@@ -259,7 +279,7 @@ def index (request):
     return render(request, 'index.html')
 
 '''
-contraseña_h = make_password(contraseña_personal)
+                        contraseña_h = make_password(contraseña_personal)
                         user = request.user
                         if user.is_authenticated:
                             usuario_admin = get_object_or_404(UsuarioAdmin, user=user)
