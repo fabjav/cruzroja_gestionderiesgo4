@@ -8,27 +8,7 @@ const enviarDatosLogin = async (event) => {
             method: 'POST',
             body: formData
         });
-        const data = await response.json();
-        if (data.data.es_admin && data.data.primer_login){
-            console.log('si es admin y es primer login');
-            const tipo = '1';
-            /*
-            const userId = data.data.user_id;
-            window.location.href = `/configuracion_inicial/?user_id=${userID}`; */
-            window.location.href = `/configuracion_inicial/?tipo=${tipo}`;
-        }else if(data.data.primer_login){
-            console.log('no es admin y es primer login');
-            const tipo = '2';
-            /*
-            const userId = data.data.user_id;
-            window.location.href = `/configuracion_inicial/?user_id=${userID}`; */
-            window.location.href = `/configuracion_inicial/?tipo=${tipo}`;
-
-            //window.location.href = '/index/';
-        }
-
-        
-          
+         
     }catch(error){
         console.log(error);
     }

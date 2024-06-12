@@ -1,11 +1,23 @@
-const llenadoDinamico = async () => {
-    try{
-        const response = await fetch("./configuracion_inicial");
+const ValidarDatos = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(id_form_config_inicial);
+    try{   
+        const response = await fetch('/validar_datos_login/', {
+            method: 'POST',
+            body: formData
+        });
         const data = await response.json();
-        console.log(data);
+        let contenido = `<p>${data.data.contraseña}</p>`;
+        let contenido_p = `<p>${data.data.contraseña_p}</p>`
+        id_estado_contraseñas.innerHTML = contenido;
+        id_estado_contraseñas_p.innerHTML = contenido_p;
+        
+
+
     }catch(error){
-        console.log (error);
+        console.log(error)
     }
+
 }
 /**
  * 
@@ -32,6 +44,9 @@ const llenadoDinamico = async () => {
 
 const cargaInicial = async () => {
     //aca van las funciones y los controles de evento
+    id_form_config_inicial.addEventListener('submit', function(event){
+        ValidarDatos(event);
+    });
 }
 
 window.addEventListener('load', async () => {

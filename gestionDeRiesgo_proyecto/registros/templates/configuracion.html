@@ -1,14 +1,32 @@
+{% load static %}
+<!-- display.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Configuración</title>
+    <title>Display Data</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
     <div>
-        <div id="id_div_inicial">
-
+        <div>
+            <div>
+                <form id="id_form_config_inicial" action="{% url 'validar_datos_login' %}" method="post">
+                    {% csrf_token %}
+                {{ html_content_pass|safe}}
+                <div id="id_estado_contraseñas"></div>
+                {{ html_content_pass_p|safe}}
+                <div id="id_estado_contraseñas_p"></div>
+                <div class="form_group">
+                    <button type="submit">enviar</button>
+                </div>
+                </form>
+            </div>
+            
+           
         </div>
     </div>
+    
+    <script src="{% static 'js/configuracion.js' %}"></script>
 </body>
 </html>
+
