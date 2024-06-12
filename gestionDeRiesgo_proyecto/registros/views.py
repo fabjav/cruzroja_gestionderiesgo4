@@ -3,7 +3,7 @@ from django.http import HttpResponse, JsonResponse
 import json
 from django.contrib.auth.models import User
 from .models import UsuarioAdmin, CambioContraseña
-from django.contrib.auth.hashers import make_password
+from django.contrib.auth.hashers import make_password, check_password
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -274,20 +274,22 @@ def cambiar_pass_passPersonal(request):
 def admin_login(request):
     return render(request, 'admin_login.html')
 
-from django.contrib.auth.hashers import check_password
+
 
 
 @login_required
 def validar_datos_admin_login(request):
     if request.method == 'POST':
         contraseña_personal = request.POST.get('name_contraseña_personal')
+        print(f'contraseña personal: {contraseña_personal}')
         user = request.user
         print(f"Usuario autenticado: {user}")  # Depuración
         if user.is_authenticated:
             try:
                 usuario_admin = UsuarioAdmin.objects.get(user=user)
-                print(f"Contraseña almacenada (hash): {usuario_admin.contraseña_personal}")  # Depuración
+                print(f"Contraseña almacenada (hash): {usuario_admin.contraseña_personal}") # Depuración
                 if check_password(contraseña_personal, usuario_admin.contraseña_personal):
+                    print(check_password(contraseña_personal, usuario_admin.contraseña_personal))
                     return redirect('index')
                 else:
                     print("Contraseña incorrecta")  # Depuración

@@ -6,10 +6,10 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="{% url 'validar_datos_admin_login' %}" method="post">{% csrf_token %}
+    <form  action="{% url 'validar_datos_admin_login' %}" method="post">{% csrf_token %}
         <div>
             <label for="">ingrese su contraseña personal</label>
-            <input type="password">
+            <input name="name_contraseña_personal" type="password">
         </div>
         <div>
             <button type="submit">enviar</button>
