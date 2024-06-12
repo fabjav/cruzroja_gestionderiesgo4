@@ -77,9 +77,9 @@ def iniciarSesion(request):
 
                 if es_damin and cambio:
                     tipo = '1'
-                elif cambio:
+                elif cambio and not es_damin:
                     tipo = '2'
-                else:
+                elif es_damin and not cambio:
                     tipo = '3'
                 
                 return redirect(reverse('name_configuracion_inicial') +f'?tipo={tipo}')
@@ -151,7 +151,7 @@ def configuracion_inicial (request):
                             <div><input name="tipo" type="hidden" id="tipo" value="2"></div>'''
         html_content_pass_p = ''''''
     elif tipo == '3':
-        return redirect('index')
+        return redirect('admin_login')
     return render(request, 'configuracion.html',{'html_content_pass':html_content_pass, 'html_content_pass_p': html_content_pass_p, 'tipo': tipo})
 
 @ensure_csrf_cookie  
@@ -242,8 +242,6 @@ def validar_datos_login(request):
         data = {
             'contraseña': contraseña,
             'contraseña_p': contraseña_p,
-            'estado_p': estado_p,
-            'estado_c': estado_c
         }
         return JsonResponse({'data': data})
     else:
@@ -275,6 +273,38 @@ def cambiar_pass_passPersonal(request):
        print()
     return render(request, 'configuracion.html')
 '''
+@login_required
+def admin_login(request):
+    return render(request, 'admin_login.html')
+
+from django.contrib.auth.hashers import check_password
+
+
+
+@login_required
+def validar_datos_admin_login(request):
+    if request.method == 'POST':
+        contraseña_personal = request.POST.get('name_contraseña_personal')
+        user = request.user
+        print(f"Usuario autenticado: {user}")  # Depuración
+        if user.is_authenticated:
+            try:
+                usuario_admin = UsuarioAdmin.objects.get(user=user)
+                print(f"UsuarioAdmin encontrado: {usuario_admin}")  # Depuración
+                if check_password(contraseña_personal, usuario_admin.contraseña_personal):
+                    return redirect('index')
+                else:
+                    print("Contraseña incorrecta")  # Depuración
+                    return JsonResponse({'data': 'error'})
+            except UsuarioAdmin.DoesNotExist:
+                print("UsuarioAdmin no existe")  # Depuración
+                return JsonResponse({'data': 'UsuarioAdmin no existe'}, status=404)
+        else:
+            print("Usuario no autenticado")  # Depuración
+            return JsonResponse({'data': 'Usuario no autenticado'}, status=401)
+    else:
+        return JsonResponse({'error': 'Método no permitido'}, status=405)
+
 def index (request):
     return render(request, 'index.html')
 

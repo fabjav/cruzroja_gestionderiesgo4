@@ -104,5 +104,5 @@ class CambioContraseña(models.Model):
         return f'{self.user.name} - Primer login: {self.cambio}'
     
 class UsuarioAdmin(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     contraseña_personal = models.CharField(max_length=100)
