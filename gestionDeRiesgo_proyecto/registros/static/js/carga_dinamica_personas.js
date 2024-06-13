@@ -70,12 +70,16 @@ const listarCasas = async (idBarrio) => {
 }
 
 
-const listarBarrios = async (idDistrito) => {
+const listarBarrios = async (idDistrito, todos) => {
     try{
+        if (todos){
+            console.log(todos);
+            
+        }
         const response = await fetch(`./get_barrio/${idDistrito}`);
         const data = await response.json();
         if (data.message === 'Success'){
-            let opciones_p = `<option value="todos">Ver Todo</option>`;
+            let opciones_p = ``;
             barrios = data.barrios;
             barrios.forEach((barrio) =>{
                 opciones_p += `<option value="${barrio.id}">${barrio.nombre}</option>`;
@@ -103,7 +107,7 @@ const listarDistritos = async (idDepartamento) => {
         const data = await response.json();
 
         if (data.message === 'Success'){
-            let opciones_p = `<option value="todos">Ver Todo</option>`;
+            let opciones_p = ``;
             distritos = data.distritos;
             distritos.forEach((distrito) =>{
                 opciones_p += `<option value="${distrito.id}">${distrito.nombre}</option>`;
@@ -114,7 +118,7 @@ const listarDistritos = async (idDepartamento) => {
                 id_opc_barrios.style.backgroundColor = 'gray';
                 id_opc_casas.disabled = true;
                 id_opc_casas.style.backgroundColor = 'gray';
-                listarBarrios('todos')
+                listarBarrios(data.distritos[0].id,'todos')
             } else {
                 listarBarrios(data.distritos[0].id);
             }
@@ -202,28 +206,12 @@ const cargaInicial = async()=>{
         listarDistritos(event.target.value);
     });
     id_opc_distritos.addEventListener('change', (event) => {
-        if (event.target.value === 'todos') {
-            id_opc_barrios.disabled = true;
-            id_opc_barrios.style.backgroundColor = 'gray';
-            id_opc_casas.disabled = true;
-            id_opc_casas.style.backgroundColor = 'gray';
-        } else {
-            id_opc_barrios.disabled = false;
-            id_opc_barrios.style.backgroundColor = '';
-            listarBarrios(event.target.value);
-            id_opc_casas.disabled = false;
-            id_opc_casas.style.backgroundColor = '';
-        }
+       listarBarrios(event.target.value);
+           
     });
     id_opc_barrios.addEventListener('change', (event) => {
-        if (event.target.value === 'todos') {
-            id_opc_casas.disabled = true;
-            id_opc_casas.style.backgroundColor = 'gray';
-        } else {
-            id_opc_casas.disabled = false;
-            id_opc_casas.style.backgroundColor = '';
-            listarCasas(event.target.value);
-        }
+        listarCasas(event.target.value);
+        
     });
     id_opc_casas.addEventListener('change', (event) => {
         llenarTabla(event.target.value);

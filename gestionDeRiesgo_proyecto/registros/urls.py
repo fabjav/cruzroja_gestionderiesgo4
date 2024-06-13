@@ -18,5 +18,8 @@ urlpatterns = [
     path('get_distrito/<int:departamento_id>', views.get_distrito, name="get_distrito"),
     path('get_barrio/<int:distrito_id>', views.get_barrio, name="get_barrio"),
     path('get_casa/<int:barrio_id>', views.get_casa, name="get_casa"),
-    path('get_persona/<int:casa_id>', views.get_personas, name="get_persona")
+    path('get_persona/<int:casa_id>', views.get_personas, name="get_persona"),
+    path('get_all_persona/', views.get_all_persona, name="get_all_persona"),
+
+    
 ]

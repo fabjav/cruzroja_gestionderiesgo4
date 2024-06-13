@@ -5,59 +5,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-    <div>
-        <h1>bienvenido</h1>
-        <div>
-            <div>
-                <label for="id_opc_pais">Pais</label>
-                <select name="id_opc_pais" id="id_opc_pais"></select>
+    <div class="container">
+        <div class="top">
+            <h1>bienvenido</h1>
+        </div>
+        <div class="bottom">
+            <div class="opciones">
+                <div>
+                    <label for="id_opc_pais">Pais</label>
+                    <select name="id_opc_pais" id="id_opc_pais"></select>
+                </div>
+                <div>
+                    <label for="id_opc_provincias">Provincia</label>
+                    <select name="id_opc_provincias" id="id_opc_provincias"></select>
+                </div>
+                <div>
+                    <label for="id_opc_departamentos">Departamentos</label>
+                    <select name="id_opc_departamentos" id="id_opc_departamentos"></select>
+                </div>
+                
+                <div>
+                    <label for="id_opc_distritos">Distros</label>
+                    <select name="id_opc_distritos" id="id_opc_distritos"></select>
+                </div>
+                <div>
+                    <label for="id_opc_ver_todo_distrito">Ver Todo</label>
+                    <input type="checkbox" name="id_opc_ver_todo_distrito" id="id_opc_ver_todo_distrito">
+                </div>
+                
+                
+                <div>
+                    <label for="id_opc_barrios">Barrios</label>
+                    <select name="id_opc_barrios" id="id_opc_barrios"></select>
+                </div>
+                <div>
+                    <label for="id_opc_ver_todo_barrio">Ver Todo</label>
+                    <input type="checkbox" name="id_opc_ver_todo_barrio" id="id_opc_ver_todo_barrio">
+                </div>
+                <div>
+                    <label for="id_opc_casas">Casas</label>
+                    <select name="id_opc_casas" id="id_opc_casas"></select>
+                </div>
             </div>
             <div>
-                <label for="id_opc_provincias">Provincia</label>
-                <select name="id_opc_provincias" id="id_opc_provincias"></select>
-            </div>
-            <div>
-                <label for="id_opc_departamentos">Departamentos</label>
-                <select name="id_opc_departamentos" id="id_opc_departamentos"></select>
-            </div>
-            <div>
-                <label for="id_opc_distritos">Distros</label>
-                <select name="id_opc_distritos" id="id_opc_distritos"></select>
-            </div>
-            
-            <div>
-                <label for="id_opc_barrios">Barrios</label>
-                <select name="id_opc_barrios" id="id_opc_barrios"></select>
-            </div>
-            <div>
-                <label for="id_opc_casas">Casas</label>
-                <select name="id_opc_casas" id="id_opc_casas"></select>
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Edad</th>
+                            <th>Parentesco</th>
+                            <th>Discapacidad</th>
+                            <th>Direccion</th>
+                            <th>Telefono de emergenia</th>
+                            <th>Padecimiento</th>
+                            <th>Medicamento</th>
+                            <th>Dosis</th>
+                            <th>Edición</th>
+                        </tr>
+                    </thead>
+                    <tbody id="id_tbody_personas">
+                        
+                    </tbody>
+                </table>
             </div>
         </div>
-    </div>
-    
-    <table>
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Edad</th>
-                <th>Parentesco</th>
-                <th>Discapacidad</th>
-                <th>Direccion</th>
-                <th>Telefono de emergenia</th>
-                <th>Padecimiento</th>
-                <th>Medicamento</th>
-                <th>Dosis</th>
-                <th>Edición</th>
-            </tr>
-        </thead>
-        <tbody id="id_tbody_personas">
-            
-        </tbody>
-    </table>
+        
+        
+        </div>
+        
+        
     <script src="{% static 'js/carga_dinamica_personas.js' %}"></script>
 </body>
 </html>

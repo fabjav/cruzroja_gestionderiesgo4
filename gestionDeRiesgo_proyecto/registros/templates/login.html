@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+
 {% load static %}
 
 <!DOCTYPE html>
@@ -7,32 +7,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
 </head>
 {% block content %}
 <body>
-    <div>
-        <h1>Inicio de Sesión</h1>
-    </div>
-    <div>
-        <div >
-            <form id="id_login_form" action="{% url 'name_login' %}" method="post">{% csrf_token %}
-                <div id="id_div_inicial">
-                    <div>
-                        <label for="usuario">USUARIO</label>
-                        <input type="text" name="usuario" id="id_usuario_input" placeholder="USUARIO">
+    <div class="container">
+        <div class="top">
+            <h1 class="h1" >Inicio de Sesión</h1>
+        </div>
+        <div class="bottom" >
+            <div class="form">
+                <form id="id_login_form" action="{% url 'name_login' %}" method="post">{% csrf_token %}
+                    <div id="id_div_inicial" >
+                        <div >
+                            <label for="usuario">USUARIO</label>
+                            <input type="text" name="usuario" id="id_usuario_input" placeholder="USUARIO">
+                        </div>
+                        <div>
+                            <label for="contraseña">CONTRASEÑA</label>
+                            <input type="password" name="contraseña" id="id_contraseña_input" placeholder="CONTRASEÑA">
+                        </div>
+                        
                     </div>
                     <div>
-                        <label for="contraseña">CONTRASEÑA</label>
-                        <input type="password" name="contraseña" id="id_contraseña_input" placeholder="CONTRASEÑA">
+                        <button type="submit">Iniciar Sesión</button>
                     </div>
-                    
-                </div>
+                </form>  
                 <div>
-                    <button type="submit">Iniciar Sesión</button>
+                    {{error|safe}}
                 </div>
-            </form>  
-            <div>
-                {{error|safe}}
             </div>
         </div>
     </div>

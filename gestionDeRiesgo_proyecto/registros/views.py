@@ -291,7 +291,38 @@ def get_distrito(request, departamento_id):
     return JsonResponse(data)
 
 def get_barrio(request, distrito_id):
-    barrios = list(Barrio.objects.filter(distrito_id=distrito_id).values())
+    if distrito_id == 'todos':
+        try:
+            
+            personas = Persona.objects.values()
+            personas_data = []
+            for persona in personas:
+                padecimientos = persona.padecimientos.all()
+                padecimientos_list = [padecimiento.nombre for padecimiento in padecimientos]
+                rol_nombre = persona.rol.nombre if persona.rol else None  # Obtener el nombre del rol o None si no hay rol
+                personas_data.append({
+                    'id': persona.id,
+                    'nombre': persona.nombre,
+                    'apellido': persona.apellido,
+                    'fecha_nac': persona.fecha_nac,
+                    'rol': rol_nombre,
+                    'casa': {
+                        'nombre': persona.casa.nombre,
+                        'calle': persona.casa.calle.nombre,
+                        'numero': persona.casa.numero,
+                        'barrio': persona.casa.barrio.nombre,
+                    },
+                    'telefono_emergencia': persona.telefono_emergencia,
+                    'padecimientos': padecimientos_list,
+                    'medicamento': persona.medicamento,
+                    'dosis': persona.dosis,
+                })
+                print(persona.casa.calle.nombre)
+            data = {'message': 'Success', 'personas': personas_data}
+        except Casa.DoesNotExist:
+            data = {'message': 'Casa not found'}
+    else:
+        barrios = list(Barrio.objects.filter(distrito_id=distrito_id).values())
 
     if (len(barrios)>0):
         data = {'message': 'Success', 'barrios':barrios}
@@ -341,3 +372,39 @@ def get_personas(request, casa_id):
         data = {'message': 'Casa not found'}
     
     return JsonResponse(data)
+
+def get_all_persona(request):
+    try:
+        
+        personas = Persona.objects.values()
+        personas_data = []
+        for persona in personas:
+            padecimientos = persona.padecimientos.all()
+            padecimientos_list = [padecimiento.nombre for padecimiento in padecimientos]
+            rol_nombre = persona.rol.nombre if persona.rol else None  # Obtener el nombre del rol o None si no hay rol
+            personas_data.append({
+                'id': persona.id,
+                'nombre': persona.nombre,
+                'apellido': persona.apellido,
+                'fecha_nac': persona.fecha_nac,
+                'rol': rol_nombre,
+                'casa': {
+                    'nombre': persona.casa.nombre,
+                    'calle': persona.casa.calle.nombre,
+                    'numero': persona.casa.numero,
+                    'barrio': persona.casa.barrio.nombre,
+                },
+                'telefono_emergencia': persona.telefono_emergencia,
+                'padecimientos': padecimientos_list,
+                'medicamento': persona.medicamento,
+                'dosis': persona.dosis,
+            })
+            print(persona.casa.calle.nombre)
+        data = {'message': 'Success', 'personas': personas_data}
+        
+    except Casa.DoesNotExist:
+        data = {'message': 'Casa not found'}
+    
+    return JsonResponse(data)
+
+
