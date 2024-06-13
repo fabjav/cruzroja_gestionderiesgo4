@@ -1,3 +1,52 @@
+function calculateAge(dateString) {
+    const birthDate = new Date(dateString);
+    const now = new Date();
+    const age = now.getFullYear() - birthDate.getFullYear();
+    const monthDiff = now.getMonth() - birthDate.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && now.getDate() < birthDate.getDate())) {
+        return age - 1;
+    }
+    return age;
+}
+
+const llenarTabla = async (idCasa) => {
+    try {
+        const response = await fetch(`./get_persona/${idCasa}`);
+        const data = await response.json();
+
+        if (data.message === 'Success') {
+            const personas = data.personas;
+            console.log(personas);
+            let contenido_tabla = '';
+
+            personas.forEach((persona) => {
+                contenido_tabla += `<tr>
+                    <td>${persona.nombre}</td>
+                    <td>${persona.apellido}</td>
+                    <td>${calculateAge(persona.fecha_nac)} años</td>
+                    <td>${persona.rol ? persona.rol : ''}</td>
+                    <td>${persona.rol ? 'Sí' : 'No'}</td>
+                    <td>${persona.casa.calle}, ${persona.casa.numero}</td>
+                    <td>${persona.telefono_emergencia}</td>
+                    <td>${persona.padecimientos.join(', ')}</td>
+                    <td>${persona.medicamento ? persona.medicamento : ''}</td>
+                    <td>${persona.dosis ? persona.dosis : ''}</td>
+                </tr>`;
+            });
+
+            // Seleccionamos el cuerpo de la tabla
+            const tbody = document.getElementById('id_tbody_personas');
+            // Asignamos el contenido a la tabla
+            tbody.innerHTML = contenido_tabla;
+        } else {
+            console.error('Error al obtener las personas:', data.message);
+        }
+    } catch (error) {
+        console.error('Error en la solicitud:', error);
+    }
+};
+
+
 const listarCasas = async (idBarrio) => {
     try{
         const response = await fetch(`./get_casa/${idBarrio}`);
@@ -16,7 +65,7 @@ const listarCasas = async (idBarrio) => {
 
 
     }catch(error){
-        console.log(error)
+        console.log(error);
     }
 }
 
@@ -26,20 +75,25 @@ const listarBarrios = async (idDistrito) => {
         const response = await fetch(`./get_barrio/${idDistrito}`);
         const data = await response.json();
         if (data.message === 'Success'){
-            let opciones_p = ``;
+            let opciones_p = `<option value="todos">Ver Todo</option>`;
             barrios = data.barrios;
             barrios.forEach((barrio) =>{
                 opciones_p += `<option value="${barrio.id}">${barrio.nombre}</option>`;
             });
             id_opc_barrios.innerHTML = opciones_p;
-            listarCasas(data.barrios[0].id);
+            if (id_opc_barrios.value === 'todos') {
+                id_opc_casas.disabled = true;
+                id_opc_casas.style.backgroundColor = 'gray';
+            } else {
+                listarCasas(data.barrios[0].id);
+            }
         }else{
             console.log('no hay distritos');
         }
 
 
     }catch(error){
-        console.log(error)
+        console.log(error);
     }
 }
 
@@ -49,18 +103,26 @@ const listarDistritos = async (idDepartamento) => {
         const data = await response.json();
 
         if (data.message === 'Success'){
-            let opciones_p = ``;
+            let opciones_p = `<option value="todos">Ver Todo</option>`;
             distritos = data.distritos;
             distritos.forEach((distrito) =>{
                 opciones_p += `<option value="${distrito.id}">${distrito.nombre}</option>`;
             });
             id_opc_distritos.innerHTML = opciones_p;
-            listarBarrios(data.distritos[0].id);
+            if (id_opc_distritos.value === 'todos') {
+                id_opc_barrios.disabled = true;
+                id_opc_barrios.style.backgroundColor = 'gray';
+                id_opc_casas.disabled = true;
+                id_opc_casas.style.backgroundColor = 'gray';
+                listarBarrios('todos')
+            } else {
+                listarBarrios(data.distritos[0].id);
+            }
         }else{
             console.log('no hay distritos');
         }
     }catch(error){
-        console.log(error)
+        console.log(error);
     }
 }
 
@@ -81,7 +143,7 @@ const listarDepartamentos = async (idProvincia) => {
             console.log('no hay provincias xd');
         }
     }catch(error){
-        console.log(error)
+        console.log(error);
     }
 }
 
@@ -102,7 +164,7 @@ const listarProvincias = async (idPais) => {
             console.log('no hay provincias xd');
         }
     }catch(error){
-        console.log(error)
+        console.log(error);
     }
 }
 
@@ -140,14 +202,33 @@ const cargaInicial = async()=>{
         listarDistritos(event.target.value);
     });
     id_opc_distritos.addEventListener('change', (event) => {
-        listarBarrios(event.target.value);
+        if (event.target.value === 'todos') {
+            id_opc_barrios.disabled = true;
+            id_opc_barrios.style.backgroundColor = 'gray';
+            id_opc_casas.disabled = true;
+            id_opc_casas.style.backgroundColor = 'gray';
+        } else {
+            id_opc_barrios.disabled = false;
+            id_opc_barrios.style.backgroundColor = '';
+            listarBarrios(event.target.value);
+            id_opc_casas.disabled = false;
+            id_opc_casas.style.backgroundColor = '';
+        }
     });
     id_opc_barrios.addEventListener('change', (event) => {
-        listarCasas(event.target.value);
+        if (event.target.value === 'todos') {
+            id_opc_casas.disabled = true;
+            id_opc_casas.style.backgroundColor = 'gray';
+        } else {
+            id_opc_casas.disabled = false;
+            id_opc_casas.style.backgroundColor = '';
+            listarCasas(event.target.value);
+        }
     });
     id_opc_casas.addEventListener('change', (event) => {
         llenarTabla(event.target.value);
     });
+
 };
 
 

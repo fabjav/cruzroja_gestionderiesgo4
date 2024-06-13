@@ -309,10 +309,35 @@ def get_casa(request, barrio_id):
     return JsonResponse(data)
 
 def get_personas(request, casa_id):
-    personas = list(Casa.objects.filter(casa_id=casa_id).values())
-
-    if (len(personas)>0):
-        data = {'message': 'Succes', 'personas':personas}
-    else:
-        data = {'message': 'Personas not found'}
+    try:
+        casa = get_object_or_404(Casa, id=casa_id)
+        personas = Persona.objects.filter(casa=casa)
+        personas_data = []
+        for persona in personas:
+            padecimientos = persona.padecimientos.all()
+            padecimientos_list = [padecimiento.nombre for padecimiento in padecimientos]
+            rol_nombre = persona.rol.nombre if persona.rol else None  # Obtener el nombre del rol o None si no hay rol
+            personas_data.append({
+                'id': persona.id,
+                'nombre': persona.nombre,
+                'apellido': persona.apellido,
+                'fecha_nac': persona.fecha_nac,
+                'rol': rol_nombre,
+                'casa': {
+                    'nombre': persona.casa.nombre,
+                    'calle': persona.casa.calle.nombre,
+                    'numero': persona.casa.numero,
+                    'barrio': persona.casa.barrio.nombre,
+                },
+                'telefono_emergencia': persona.telefono_emergencia,
+                'padecimientos': padecimientos_list,
+                'medicamento': persona.medicamento,
+                'dosis': persona.dosis,
+            })
+            print(persona.casa.calle.nombre)
+        data = {'message': 'Success', 'personas': personas_data}
+        
+    except Casa.DoesNotExist:
+        data = {'message': 'Casa not found'}
+    
     return JsonResponse(data)

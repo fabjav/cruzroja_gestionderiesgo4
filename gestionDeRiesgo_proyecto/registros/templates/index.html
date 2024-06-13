@@ -8,29 +8,36 @@
 </head>
 <body>
     <div>
+        <h1>bienvenido</h1>
         <div>
             <div>
+                <label for="id_opc_pais">Pais</label>
                 <select name="id_opc_pais" id="id_opc_pais"></select>
             </div>
             <div>
+                <label for="id_opc_provincias">Provincia</label>
                 <select name="id_opc_provincias" id="id_opc_provincias"></select>
             </div>
             <div>
+                <label for="id_opc_departamentos">Departamentos</label>
                 <select name="id_opc_departamentos" id="id_opc_departamentos"></select>
             </div>
             <div>
+                <label for="id_opc_distritos">Distros</label>
                 <select name="id_opc_distritos" id="id_opc_distritos"></select>
             </div>
             
             <div>
+                <label for="id_opc_barrios">Barrios</label>
                 <select name="id_opc_barrios" id="id_opc_barrios"></select>
             </div>
             <div>
+                <label for="id_opc_casas">Casas</label>
                 <select name="id_opc_casas" id="id_opc_casas"></select>
             </div>
         </div>
     </div>
-    <h1>bienvenido</h1>
+    
     <table>
         <thead>
             <tr>
@@ -44,13 +51,11 @@
                 <th>Padecimiento</th>
                 <th>Medicamento</th>
                 <th>Dosis</th>
-                <th>Funciones</th>
+                <th>Edición</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td></td>
-            </tr>
+        <tbody id="id_tbody_personas">
+            
         </tbody>
     </table>
     <script src="{% static 'js/carga_dinamica_personas.js' %}"></script>

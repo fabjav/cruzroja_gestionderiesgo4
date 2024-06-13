@@ -87,10 +87,14 @@ class Persona(models.Model):
     primario = models.BooleanField(default=False)
     secundario = models.BooleanField(default=False)
     terciario = models.BooleanField(default=False)
-    pedecimientos = models.ManyToManyField(Padecimientos, default='Ninguno', blank=True)
+    padecimientos = models.ManyToManyField(Padecimientos, default='Ninguno', blank=True)
+    medicamento = models.CharField(max_length=100, default='Ninguno')
+    dosis = models.CharField(max_length=30, default='No')
+    telefono_emergencia = models.CharField(max_length=100, default='No tiene')
     fecha_nac = models.DateField(null=True)
     dni = models.CharField(max_length=20)
     rol = models.ForeignKey(Rol, on_delete=models.SET_NULL, null=True)
+
 
     def __str__(self):
         return self.nombre
