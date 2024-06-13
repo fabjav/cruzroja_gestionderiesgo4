@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 import json
 from django.contrib.auth.models import User
-from .models import UsuarioAdmin, CambioContraseña
+from .models import UsuarioAdmin, CambioContraseña, Pais, Provincia, Departamento, Distrito, Barrio, Calle, Casa, Persona
 from django.contrib.auth.hashers import make_password, check_password
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import authenticate, login
@@ -248,6 +248,71 @@ def validar_datos_admin_login(request):
     else:
         return JsonResponse({'data': 'invalid_request'})
 
+
+@ensure_csrf_cookie
+@login_required
 def index (request):
     return render(request, 'index.html')
 
+def get_pais(request):
+    paises = list(Pais.objects.values())
+    if (len(paises)> 0):
+        data = {'message':'Success', 'paises': paises}
+    else:
+        data = {'message': 'Paises not found'}
+    
+    return JsonResponse(data)
+
+def get_provincia(request, pais_id):
+    provincias = list(Provincia.objects.filter(pais=pais_id).values())
+
+    if (len(provincias)>0):
+        data = {'message': 'Success', 'provincias': provincias}
+    else:
+        data = {'message': 'Provincias not found'}
+    return JsonResponse(data)
+
+def get_departamento(request, provincia_id):
+    departamentos = list(Departamento.objects.filter(provincia_id=provincia_id).values())
+
+    if (len(departamentos)>0):
+        data = {'message':'Success', 'departamentos': departamentos}
+    else:
+        data = {'message': 'Departamentos not found'}
+    return JsonResponse(data)
+
+def get_distrito(request, departamento_id):
+    distritos = list(Distrito.objects.filter(departamento_id=departamento_id).values())
+
+    if (len(distritos) >0):
+        data = {'message':'Success', 'distritos': distritos}
+    else:
+        data = {'message': 'Distritos not found'}
+    return JsonResponse(data)
+
+def get_barrio(request, distrito_id):
+    barrios = list(Barrio.objects.filter(distrito_id=distrito_id).values())
+
+    if (len(barrios)>0):
+        data = {'message': 'Success', 'barrios':barrios}
+    else:
+        data = {'message': 'Barrios not found'}
+    return JsonResponse(data)
+
+def get_casa(request, barrio_id):
+    casas = list(Casa.objects.filter(barrio_id=barrio_id).values())
+
+    if (len(casas)>0):
+        data = {'message': 'Success', 'casas': casas}
+    else:
+        data = {'message': 'Casas not found'}
+    return JsonResponse(data)
+
+def get_personas(request, casa_id):
+    personas = list(Casa.objects.filter(casa_id=casa_id).values())
+
+    if (len(personas)>0):
+        data = {'message': 'Succes', 'personas':personas}
+    else:
+        data = {'message': 'Personas not found'}
+    return JsonResponse(data)

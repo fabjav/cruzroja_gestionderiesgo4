@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +7,52 @@
     <title>Document</title>
 </head>
 <body>
+    <div>
+        <div>
+            <div>
+                <select name="id_opc_pais" id="id_opc_pais"></select>
+            </div>
+            <div>
+                <select name="id_opc_provincias" id="id_opc_provincias"></select>
+            </div>
+            <div>
+                <select name="id_opc_departamentos" id="id_opc_departamentos"></select>
+            </div>
+            <div>
+                <select name="id_opc_distritos" id="id_opc_distritos"></select>
+            </div>
+            
+            <div>
+                <select name="id_opc_barrios" id="id_opc_barrios"></select>
+            </div>
+            <div>
+                <select name="id_opc_casas" id="id_opc_casas"></select>
+            </div>
+        </div>
+    </div>
     <h1>bienvenido</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Edad</th>
+                <th>Parentesco</th>
+                <th>Discapacidad</th>
+                <th>Direccion</th>
+                <th>Telefono de emergenia</th>
+                <th>Padecimiento</th>
+                <th>Medicamento</th>
+                <th>Dosis</th>
+                <th>Funciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    <script src="{% static 'js/carga_dinamica_personas.js' %}"></script>
 </body>
 </html>
