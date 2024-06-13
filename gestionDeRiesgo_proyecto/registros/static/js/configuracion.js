@@ -1,51 +1,43 @@
 const ValidarDatos = async (event) => {
     event.preventDefault();
     const formData = new FormData(id_form_config_inicial);
-    try{   
+    try {
         const response = await fetch('/validar_datos_login/', {
             method: 'POST',
             body: formData
         });
         const data = await response.json();
-        let contenido = `<p>${data.data.contraseña}</p>`;
-        let contenido_p = `<p>${data.data.contraseña_p}</p>`
+        let contenido = `<p>${data.data.html_content_1}</p>`;
         id_estado_contraseñas.innerHTML = contenido;
-        id_estado_contraseñas_p.innerHTML = contenido_p;
-        
+        let estado = data.data.estado_confirmar;
 
-
-    }catch(error){
-        console.log(error)
-    }
-
-}
-/**
- * 
- * <script type="text/javascript">
-        var tipo = "{{ tipo }}";
-        console.log("Tipo:", tipo);
-        // Aquí puedes usar el valor de 'tipo' en tu script
-    </script>
-
-    const llenadoDinamico = async () => {
-    try {
-        const response = await fetch('/ruta/a/tu/vista/actualizar_contraseña'); // Reemplaza con la URL correcta
-        if (!response.ok) {
-            throw new Error('Network response was not ok ' + response.statusText);
+        let form_flotante = ``;
+        if (estado === '1') {
+            form_flotante += `<p>Contraseñas guardadas con éxito</p>
+                    <input id="id_continuar" type="button" value="Continuar">`;
+            id_boton_enviar_form.innerHTML = ``;
         }
-        const data = await response.json();
-        console.log(data);
-        // Aquí puedes usar 'data.tipo' para lo que necesites
+        id_continuar.innerHTML = form_flotante;
+
     } catch (error) {
-        console.error('There has been a problem with your fetch operation:', error);
+        console.log(error);
     }
 }
- */
 
 const cargaInicial = async () => {
-    //aca van las funciones y los controles de evento
-    id_form_config_inicial.addEventListener('submit', function(event){
+    // Asignación de variables para los elementos HTML
+    const id_form_config_inicial = document.getElementById('id_form_config_inicial');
+    const id_estado_contraseñas = document.getElementById('id_estado_contraseñas');
+    const id_boton_enviar_form = document.getElementById('id_boton_enviar_form');
+    const id_continuar = document.getElementById('id_continuar');
+
+    // Eventos
+    id_form_config_inicial.addEventListener('submit', function (event) {
         ValidarDatos(event);
+    });
+
+    id_continuar.addEventListener('click', function () {
+        window.location.href = '/confirmar_admin'; // Cambia '/confirmar_admin' por la URL correcta
     });
 }
 

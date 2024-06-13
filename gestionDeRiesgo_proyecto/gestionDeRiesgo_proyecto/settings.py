@@ -139,3 +139,6 @@ import os
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+LOGIN_URL = 'name_login'  # Nombre de la URL de inicio de sesión
+#LOGIN_REDIRECT_URL = 'index'  # Nombre de la URL a la que se redirige después de iniciar sesión

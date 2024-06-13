@@ -14,12 +14,14 @@
                     {% csrf_token %}
                 {{ html_content_pass|safe}}
                 <div id="id_estado_contraseñas"></div>
-                {{ html_content_pass_p|safe}}
-                <div id="id_estado_contraseñas_p"></div>
-                <div class="form_group">
+                
+                <div id="id_boton_enviar_form" class="form_group">
                     <button type="submit">enviar</button>
                 </div>
                 </form>
+            </div>
+            <div>
+                <div id="id_continuar"></div>
             </div>
             
            
