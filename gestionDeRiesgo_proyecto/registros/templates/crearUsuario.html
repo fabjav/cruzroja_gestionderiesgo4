@@ -1,21 +1,18 @@
-{% extends 'base.html' %}
 {% load static %}
 
-<!-- registro_usuario.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Crear Usuario</title>
+    <link rel="stylesheet" href="{% static 'css/crearusuario.css' %}">
 </head>
-{% block content %}
-
 <body>
-    <h1>Crear Usuario</h1>
-    <div>
-        <div>
-            <form id="id_form_crear_usuario" method="post" action="{% url 'crearUsuario' %}">{% csrf_token %}
-
+    <h1 class="top">Crear Usuario</h1>
+    <div >
+        <div class="form">
+            <form id="id_form_crear_usuario" method="post" action="{% url 'crearUsuario' %}">
+                {% csrf_token %}
                 <div>
                     <label for="nombre">NOMBRES</label>
                     <input type="text" name="nombre" id="id_nombre_form">
@@ -24,12 +21,12 @@
                 </div>
                 <div>
                     <label for="email">EMAIL</label>
-                    <input type="email" name="email" id="id_email_form">
+                    <input type="text" name="email" id="id_email_form">
                     <label for="DNI">DNI</label>
                     <input type="text" name="DNI" id="id_DNI_form">
                 </div>
                 
-                <div >
+                <div class="inputs">
                     <label for="usuario">USUARIO</label>
                     <input type="text" name="usuario" id="id_usuario_form" readonly>
                     <label for="contraseña">CONTRASEÑA</label>
@@ -42,14 +39,9 @@
                     <button type="submit">Enviar</button>
                 </div>
                 <div id="messages"></div>
-                
-                
             </form>
         </div>
     </div>
-
     <script src="{% static 'js/crearUsuario.js' %}"></script>
 </body>
-
-{% endblock %}
-</html>  
+</html>
