@@ -291,39 +291,9 @@ def get_distrito(request, departamento_id):
     return JsonResponse(data)
 
 def get_barrio(request, distrito_id):
-    if distrito_id == 'todos':
-        try:
-            
-            personas = Persona.objects.values()
-            personas_data = []
-            for persona in personas:
-                padecimientos = persona.padecimientos.all()
-                padecimientos_list = [padecimiento.nombre for padecimiento in padecimientos]
-                rol_nombre = persona.rol.nombre if persona.rol else None  # Obtener el nombre del rol o None si no hay rol
-                personas_data.append({
-                    'id': persona.id,
-                    'nombre': persona.nombre,
-                    'apellido': persona.apellido,
-                    'fecha_nac': persona.fecha_nac,
-                    'rol': rol_nombre,
-                    'casa': {
-                        'nombre': persona.casa.nombre,
-                        'calle': persona.casa.calle.nombre,
-                        'numero': persona.casa.numero,
-                        'barrio': persona.casa.barrio.nombre,
-                    },
-                    'telefono_emergencia': persona.telefono_emergencia,
-                    'padecimientos': padecimientos_list,
-                    'medicamento': persona.medicamento,
-                    'dosis': persona.dosis,
-                })
-                print(persona.casa.calle.nombre)
-            data = {'message': 'Success', 'personas': personas_data}
-        except Casa.DoesNotExist:
-            data = {'message': 'Casa not found'}
-    else:
-        barrios = list(Barrio.objects.filter(distrito_id=distrito_id).values())
-
+   
+    barrios = list(Barrio.objects.filter(distrito_id=distrito_id).values())
+    print(barrios)
     if (len(barrios)>0):
         data = {'message': 'Success', 'barrios':barrios}
     else:
@@ -407,4 +377,129 @@ def get_all_persona(request):
     
     return JsonResponse(data)
 
+def crear_barrio(request):
+    if request.method == 'GET':
+        distritos = Distrito.objects.all()
 
+        # Construir las opciones del select
+        options = []
+        for distrito in distritos:
+            options.append(f'<option class="options_barrio" value="{distrito.id}">{distrito.nombre}</option>')
+
+        # HTML con el select y las opciones
+        html_content = f'''
+            <h3 style="color: white" >Crear Barrio</h3>
+            <input class="cerrar" id="cerrarVentana" type="button" value="&times;">
+            <div >
+                <input class="input_form_barrio" type="text" name="nombre_barrio" placeholder="NOMBRE DEL BARRIO">
+            </div>
+            <div>
+                <input class="input_form_barrio"  type="text" name="coordenadas_barrio" placeholder="COORDENADAS">
+            </div>
+            <div>
+                
+                <select class="distrito_select" name="distrito" id="id_distrito">
+                    <option value="" disabled selected hidden >Selecciona un distrito</option>
+                    {''.join(options)}
+                </select>
+            </div>
+            <div id="id_boton_enviar_form" >
+                    <button class="btn_form_group" type="submit">enviar</button>
+                </div>
+                
+        '''
+
+        data = {'message': 'Success', 'html_content': html_content}
+        return JsonResponse(data)
+    #post
+    elif request.method == 'POST':
+        print('metodo post')
+        nombre_barrio = request.POST.get('nombre_barrio', '')
+        coordenadas = request.POST.get('coordenadas_barrio','')
+        distrito_id = request.POST.get('distrito','')
+
+        if nombre_barrio and coordenadas and distrito_id:
+            try:
+                distrito = Distrito.objects.get(pk=distrito_id)
+                print(distrito)
+            except Distrito.DoesNotExist:
+                return JsonResponse({'message': 'Dont Found'}, status=400)
+            
+            existe_barrio = Barrio.objects.filter(nombre=nombre_barrio, coordenadas=coordenadas).exists()
+            if existe_barrio:
+                return JsonResponse({'message': 'Exist'}, status=400)
+            
+            nuevo_barrio = Barrio.objects.create(
+                nombre=nombre_barrio,
+                coordenadas=coordenadas,
+                distrito=distrito
+            )    
+            message = 'Success'
+            return JsonResponse({'message':message}) 
+        else:
+            message = 'Error'
+            return JsonResponse({'message': message})
+        
+
+def crear_casa(request):
+    if request.method == 'GET':
+        distritos = Distrito.objects.all()
+
+        # Construir las opciones del select
+        options = []
+        for distrito in distritos:
+            options.append(f'<option class="options_barrio" value="{distrito.id}">{distrito.nombre}</option>')
+
+        # HTML con el select y las opciones
+        html_content = f'''
+            <h3 style="color: white" >Crear Barrio</h3>
+            <input class="cerrar" id="cerrarVentana" type="button" value="&times;">
+            <div >
+                <input class="input_form_barrio" type="text" name="nombre_barrio" placeholder="NOMBRE DEL BARRIO">
+            </div>
+            <div>
+                <input class="input_form_barrio"  type="text" name="coordenadas_barrio" placeholder="COORDENADAS">
+            </div>
+            <div>
+                
+                <select class="distrito_select" name="distrito" id="id_distrito">
+                    <option value="" disabled selected hidden >Selecciona un distrito</option>
+                    {''.join(options)}
+                </select>
+            </div>
+            <div id="id_boton_enviar_form" >
+                    <button class="btn_form_group" type="submit">enviar</button>
+                </div>
+                
+        '''
+
+        data = {'message': 'Success', 'html_content': html_content}
+        return JsonResponse(data)
+    #post
+    elif request.method == 'POST':
+        print('metodo post')
+        nombre_barrio = request.POST.get('nombre_barrio', '')
+        coordenadas = request.POST.get('coordenadas_barrio','')
+        distrito_id = request.POST.get('distrito','')
+
+        if nombre_barrio and coordenadas and distrito_id:
+            try:
+                distrito = Distrito.objects.get(pk=distrito_id)
+                print(distrito)
+            except Distrito.DoesNotExist:
+                return JsonResponse({'message': 'Dont Found'}, status=400)
+            
+            existe_barrio = Barrio.objects.filter(nombre=nombre_barrio, coordenadas=coordenadas).exists()
+            if existe_barrio:
+                return JsonResponse({'message': 'Exist'}, status=400)
+            
+            nuevo_barrio = Barrio.objects.create(
+                nombre=nombre_barrio,
+                coordenadas=coordenadas,
+                distrito=distrito
+            )    
+            message = 'Success'
+            return JsonResponse({'message':message}) 
+        else:
+            message = 'Error'
+            return JsonResponse({'message': message})

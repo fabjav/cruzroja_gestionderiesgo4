@@ -1,46 +1,58 @@
-.form_group {
-    margin-bottom: 1rem;
-}
-
-.form_group label {
-    display: block;
-    margin-bottom: 0.5rem;
-}
-body, html {
-    margin: 0;
-    height: 100%;
-}
-
-.container {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    font-family: Arial, sans-serif; /* Cambia la fuente del contenedor */
+.container{
+    width: 80%;
+    margin: auto;
+    
     
 }
-
 .top {
-    background-color: red; /* Color de la parte superior */
-    flex: .5;
-    padding: 20px;
-    color: white
-}
-
-.bottom {
-    background-color: white; /* Color de la parte inferior */
-    flex: 2; /* Ajusta la altura de la parte inferior */
-    padding: 20px;
-}
-
-.opciones{
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
     display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    height: 200px; /* Ajusta la altura según tus necesidades */
+    background-color: red;
+    padding-left: 10px; /* Ajusta el padding según tus necesidades */
 }
+.top h1{
+    text-align: center;
+    
+}
+.bottom{
+    align-items: center;
+    width: 100%;
+}
+.opciones{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    display: flex;
+   margin-left: 5%;
+    padding: 2%;
+
+    
+}
+.opciones div{
+    margin: 18px;
+}
+.btn_crear{
+    width: 100px;
+    height: 30px;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+.btn_crear:hover{
+    background-color: red;
+}
+/* TABLA */
 
 .styled-table {
     width: 80%;
     border-collapse: collapse;
     margin-right: 50 auto;
-    margin-top: 80px;
+    margin-left: 10%;
+    margin-top: 12px;
     font-size: 1em;
     font-family: Arial, sans-serif;
     border: 1px solid #ccc;
@@ -88,4 +100,58 @@ body, html {
 
 .styled-table tbody td:last-child button:hover {
     background-color: #0056b3;
+}
+
+
+/*
+etilos para crear barrios
+*/
+
+.form_crear_barrio{
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    padding:4%;
+    background-color: rgb(207, 68, 68);
+    border: none;
+    border-radius: 10px;
+    
+    align-items: center;
+    text-align: center;
+    vertical-align: center;
+    
+}
+.cerrar {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: white;
+}
+.input_form_barrio, .btn_form_group, .options_barrio{
+    
+    padding: 5px;
+    border-radius:5px;
+    width: 300px;
+    height: 25px;
+    border: none;
+    margin-bottom: 10%;
+    text-align: center;
+}
+.distrito_select {
+    padding: 5px;
+    border-radius:5px;
+    width: 310px;
+    height: 35px;
+    border: none;
+    margin-bottom: 10%;
+    text-align: center;
+}
+.opciones{
+    margin-left: 20%;
 }

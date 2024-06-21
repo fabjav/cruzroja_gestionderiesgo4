@@ -70,16 +70,14 @@ const listarCasas = async (idBarrio) => {
 }
 
 
-const listarBarrios = async (idDistrito, todos) => {
+const listarBarrios = async (idDistrito) => {
     try{
-        if (todos){
-            console.log(todos);
-            
-        }
+        
         const response = await fetch(`./get_barrio/${idDistrito}`);
         const data = await response.json();
         if (data.message === 'Success'){
             let opciones_p = ``;
+            console.log(data.barrios);
             barrios = data.barrios;
             barrios.forEach((barrio) =>{
                 opciones_p += `<option value="${barrio.id}">${barrio.nombre}</option>`;
@@ -118,7 +116,7 @@ const listarDistritos = async (idDepartamento) => {
                 id_opc_barrios.style.backgroundColor = 'gray';
                 id_opc_casas.disabled = true;
                 id_opc_casas.style.backgroundColor = 'gray';
-                listarBarrios(data.distritos[0].id,'todos')
+                listarBarrios(data.distritos[0].id);
             } else {
                 listarBarrios(data.distritos[0].id);
             }
