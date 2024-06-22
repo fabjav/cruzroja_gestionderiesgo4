@@ -461,10 +461,13 @@ def crear_casa(request):
                 <input class="input_form_barrio"  type="text" name="coordenadas_barrio" placeholder="COORDENADAS">
             </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
             
             
             
 =======
+=======
+>>>>>>> parent of f354024 (todo andando perfecto. faltan agregar el buscador de calles para crear casas.)
             <div>
                 
                 <select class="distrito_select" name="distrito" id="id_distrito">
@@ -472,6 +475,9 @@ def crear_casa(request):
                     {''.join(options)}
                 </select>
             </div>
+<<<<<<< HEAD
+>>>>>>> parent of f354024 (todo andando perfecto. faltan agregar el buscador de calles para crear casas.)
+=======
 >>>>>>> parent of f354024 (todo andando perfecto. faltan agregar el buscador de calles para crear casas.)
             <div id="id_boton_enviar_form" >
                     <button class="btn_form_group" type="submit">enviar</button>
