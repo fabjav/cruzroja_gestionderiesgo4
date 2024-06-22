@@ -60,8 +60,7 @@ const listarCasas = async (idBarrio) => {
             id_opc_casas.innerHTML = opciones_p;
             llenarTabla(data.casas[0].id);
         }else{
-            console.log('no hay casas');
-            id_opc_casas.innerHTML = `<option value="">No hay casas</option>`;
+            console.log('no hay distritos');
         }
 
 

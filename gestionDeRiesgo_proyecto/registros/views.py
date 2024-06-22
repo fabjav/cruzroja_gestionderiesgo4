@@ -384,27 +384,27 @@ def crear_barrio(request):
         # Construir las opciones del select
         options = []
         for distrito in distritos:
-            options.append(f'<option class="options_form" value="{distrito.id}">{distrito.nombre}</option>')
+            options.append(f'<option class="options_barrio" value="{distrito.id}">{distrito.nombre}</option>')
 
         # HTML con el select y las opciones
         html_content = f'''
             <h3 style="color: white" >Crear Barrio</h3>
-            <input class="cerrar" id="cerrarVentana_1" type="button" value="&times;">
+            <input class="cerrar" id="cerrarVentana" type="button" value="&times;">
             <div >
-                <input class="input_form" type="text" name="nombre_barrio" placeholder="NOMBRE DEL BARRIO">
+                <input class="input_form_barrio" type="text" name="nombre_barrio" placeholder="NOMBRE DEL BARRIO">
             </div>
             <div>
-                <input class="input_form"  type="text" name="coordenadas_barrio" placeholder="COORDENADAS">
+                <input class="input_form_barrio"  type="text" name="coordenadas_barrio" placeholder="COORDENADAS">
             </div>
             <div>
                 
-                <select class="form_select" name="distrito" id="id_distrito">
+                <select class="distrito_select" name="distrito" id="id_distrito">
                     <option value="" disabled selected hidden >Selecciona un distrito</option>
                     {''.join(options)}
                 </select>
             </div>
             <div id="id_boton_enviar_form" >
-                    <button class="btn_form_group" type="submit">Enviar</button>
+                    <button class="btn_form_group" type="submit">enviar</button>
                 </div>
                 
         '''
@@ -441,34 +441,42 @@ def crear_barrio(request):
             return JsonResponse({'message': message})
         
 
-def crear_casa(request, barrio_id):
+def crear_casa(request):
     if request.method == 'GET':
-        calles = Calle.objects.all()
+        distritos = Distrito.objects.all()
 
         # Construir las opciones del select
-        options_calle = []
-        for calle in calles:
-            options_calle.append(f'<option class="options_form" value="{calle.id}">{calle.nombre}</option>')
-        barrio = Barrio.objects.get(pk=barrio_id)
-        print(barrio)
+        options = []
+        for distrito in distritos:
+            options.append(f'<option class="options_barrio" value="{distrito.id}">{distrito.nombre}</option>')
+
         # HTML con el select y las opciones
         html_content = f'''
-            <h3 style="color: white" >Crear Casa</h3>
-            <h3 style="color: white" >en barrio {barrio}</h3>
-            <input class="cerrar" id="cerrarVentana_2" type="button" value="&times;">
+            <h3 style="color: white" >Crear Barrio</h3>
+            <input class="cerrar" id="cerrarVentana" type="button" value="&times;">
             <div >
-                <input class="input_form" type="text" name="nombre_casa" placeholder="IDENTIFICADOR">
+                <input class="input_form_barrio" type="text" name="nombre_barrio" placeholder="NOMBRE DEL BARRIO">
             </div>
             <div>
-                <input class="input_form"  type="text" name="numero_casa" placeholder="NÚMERO">
+                <input class="input_form_barrio"  type="text" name="coordenadas_barrio" placeholder="COORDENADAS">
             </div>
+<<<<<<< HEAD
             
             
             
+=======
+            <div>
+                
+                <select class="distrito_select" name="distrito" id="id_distrito">
+                    <option value="" disabled selected hidden >Selecciona un distrito</option>
+                    {''.join(options)}
+                </select>
+            </div>
+>>>>>>> parent of f354024 (todo andando perfecto. faltan agregar el buscador de calles para crear casas.)
             <div id="id_boton_enviar_form" >
                     <button class="btn_form_group" type="submit">enviar</button>
                 </div>
-                 
+                
         '''
 
         data = {'message': 'Success', 'html_content': html_content}
@@ -476,44 +484,28 @@ def crear_casa(request, barrio_id):
     #post
     elif request.method == 'POST':
         print('metodo post')
-        nombre_casa = request.POST.get ('nombre_casa','')
-        numero = request.POST.get('numero_casa','')
-        calle_id = request.POST.get('calle','')
-        barrio_id = request.POST.get('barrio','')
+        nombre_barrio = request.POST.get('nombre_barrio', '')
+        coordenadas = request.POST.get('coordenadas_barrio','')
+        distrito_id = request.POST.get('distrito','')
 
-        if nombre_casa and numero and calle_id and barrio_id:
+        if nombre_barrio and coordenadas and distrito_id:
             try:
-                
-                barrio = Barrio.objects.get(pk=barrio_id)
-                print(barrio)
-            except Barrio.DoesNotExist:
+                distrito = Distrito.objects.get(pk=distrito_id)
+                print(distrito)
+            except Distrito.DoesNotExist:
                 return JsonResponse({'message': 'Dont Found'}, status=400)
-            try:
-                calle = Calle.objects.get(pk=calle_id)
-                print(calle)
-            except Calle.DoesNotExist:
-                return JsonResponse({'message': 'Dont Found'}, statu=400)
-            existe_casa = Casa.objects.filter(nombre=nombre_casa, numero=numero).exists()
-            if existe_casa:
+            
+            existe_barrio = Barrio.objects.filter(nombre=nombre_barrio, coordenadas=coordenadas).exists()
+            if existe_barrio:
                 return JsonResponse({'message': 'Exist'}, status=400)
             
-            nueva_casa = Casa.objects.create(
-                nombre=nombre_casa,
-                numero=numero,
-                barrio=barrio,
-                calle=calle
+            nuevo_barrio = Barrio.objects.create(
+                nombre=nombre_barrio,
+                coordenadas=coordenadas,
+                distrito=distrito
             )    
             message = 'Success'
             return JsonResponse({'message':message}) 
         else:
             message = 'Error'
             return JsonResponse({'message': message})
-'''
-<div>
-                
-                <select class="form_select" name="barrio" id="id_barrio">
-                    <option value="" disabled selected hidden >Selecciona un barrio</option>
-                    {''.join(options_barrio)}
-                </select>
-            </div>
-'''
