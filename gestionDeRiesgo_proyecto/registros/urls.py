@@ -21,6 +21,6 @@ urlpatterns = [
     path('get_persona/<int:casa_id>', views.get_personas, name="get_persona"),
     path('get_all_persona/', views.get_all_persona, name="get_all_persona"),
     path('crear_barrio/', views.crear_barrio, name="crear_barrio"),
-    path('crear_casa/', views.crear_casa, name="crear_casa"),
+    path('crear_casa/<int:barrio_id>', views.crear_casa, name="crear_casa"),
    
 ]
