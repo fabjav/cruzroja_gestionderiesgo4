@@ -1,2 +1,73 @@
+# Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.sqlite3
 
-gestionDeRiesgo_proyecto/registros/__pycache__/views.cpython-311.pyc
+# Django
+*.log
+*.pot
+*.py[cod]
+*.swp
+*~
+*.bak
+*.tmp
+*.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+*.mo
+*.so
+
+# Environments
+.env
+.venv
+ENV/
+env/
+venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Celery beat schedule file
+celerybeat-schedule
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# MySQL
+*.sql
+
+# Postgres
+*.pgsql
+
+# Django migrations
+**/migrations/**
+
+# Static and media files
+staticfiles/
+media/
