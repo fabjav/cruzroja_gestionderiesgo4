@@ -22,6 +22,46 @@ const Formulario_casa = async () =>{
         const data = await response.json();
         console.log(data.html_content);
         id_content_crear_casa.innerHTML = data.html_content;
+        id_content_crear_casa.innerHTML += ``;
+        autocomplete_input.addEventListener('input', async function(event){
+            const query = autocomplete_input.value;
+            if (event.inputType === 'deleteContentBackward') {
+                isDeleting = true;
+            } else {
+                isDeleting = false;
+            }
+    
+            if (query.length < 1) {
+                currentSuggestions = [];
+                return;
+            }
+    
+            // Only fetch suggestions if not deleting
+            if (!isDeleting) {
+                const response = await fetch(`/buscar_calles/?term=${query}`);
+                const suggestions = await response.json();
+                currentSuggestions = suggestions;
+    
+                // Only suggest if there's exactly one suggestion
+                if (suggestions.length === 1) {
+                    const suggestion = suggestions[0].value;
+                    if (suggestion.toLowerCase().startsWith(query.toLowerCase())) {
+                        autocomplete_input.value = suggestion;
+                        autocomplete_input.setSelectionRange(query.length, suggestion.length);
+                    }
+                }
+            }
+        });
+        autocomplete_input.addEventListener('keydown', function(event) {
+            if (event.key === 'Tab') {
+                event.preventDefault();
+                if (currentSuggestions.length === 1) {
+                    const suggestion = currentSuggestions[0].value;
+                    autocomplete_input.value = suggestion;
+                    autocomplete_input.setSelectionRange(suggestion.length, suggestion.length);
+                }
+            }
+        });
 
     }catch(error){
         console.log(error);

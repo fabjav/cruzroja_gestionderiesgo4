@@ -457,18 +457,15 @@ def crear_casa(request, barrio_id):
             <h3 style="color: white" >en barrio {barrio}</h3>
             <input class="cerrar" id="cerrarVentana_2" type="button" value="&times;">
             <div >
-                <input class="input_form" type="text" name="nombre_casa" placeholder="IDENTIFICADOR">
+                <input autocomplete="off" class="input_form" type="text" name="nombre_casa" placeholder="IDENTIFICADOR">
             </div>
             <div>
-                <input class="input_form"  type="text" name="numero_casa" placeholder="NÚMERO">
+                <input autocomplete="off" class="input_form"  type="text" name="numero_casa" placeholder="NÚMERO">
             </div>
             
-            <div>
-                <select class="form_select" name="calle" id="id_calle">
-                    <option value="" disabled selected hidden >Selecciona una calle</option>
-                    {''.join(options_calle)}
-                </select>            
-            </div>
+           <div id="autocomplete-suggestions" class="autocomplete-suggestions">
+                    <input autocomplete="off" name="calle" class="input_form" type="text" id="autocomplete_input" placeholder="CALLE">
+                </div>
             
             <div id="id_boton_enviar_form" >
                     <button class="btn_form_group" type="submit">enviar</button>
@@ -483,10 +480,10 @@ def crear_casa(request, barrio_id):
         print('metodo post')
         nombre_casa = request.POST.get ('nombre_casa','')
         numero = request.POST.get('numero_casa','')
-        calle_id = request.POST.get('calle','')
+        calle = request.POST.get('calle','')
         barrio_id = request.POST.get('barrio','')
 
-        if nombre_casa and numero and calle_id and barrio_id:
+        if nombre_casa and numero and calle and barrio_id:
             try:
                 
                 barrio = Barrio.objects.get(pk=barrio_id)
@@ -494,7 +491,7 @@ def crear_casa(request, barrio_id):
             except Barrio.DoesNotExist:
                 return JsonResponse({'message': 'Dont Found'}, status=400)
             try:
-                calle = Calle.objects.get(pk=calle_id)
+                calle = Calle.objects.get(nombre=calle)
                 print(calle)
             except Calle.DoesNotExist:
                 return JsonResponse({'message': 'Dont Found'}, statu=400)
@@ -516,9 +513,16 @@ def crear_casa(request, barrio_id):
 '''
 <div>
                                 
-                <select class="form_select" name="barrio" id="id_barrio">
-                    <option value="" disabled selected hidden >Selecciona un barrio</option>
-                    {''.join(options_barrio)}
-                </select>
+               <div>
+                <select class="form_select" name="calle" id="id_calle">
+                    <option value="" disabled selected hidden >Selecciona una calle</option>
+                    {''.join(options_calle)}
+                </select>            
             </div>
 '''
+
+def buscar_calles(request):
+    term = request.GET.get('term', '')
+    calles = Calle.objects.filter(nombre__icontains=term)[:10]  # Cambia esto por tu lógica de búsqueda
+    results = [{'label': calle.nombre, 'value': calle.nombre} for calle in calles]
+    return JsonResponse(results, safe=False)
