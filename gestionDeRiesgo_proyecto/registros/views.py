@@ -515,7 +515,7 @@ def crear_casa(request, barrio_id):
             return JsonResponse({'message': message})
 '''
 <div>
-                
+                                
                 <select class="form_select" name="barrio" id="id_barrio">
                     <option value="" disabled selected hidden >Selecciona un barrio</option>
                     {''.join(options_barrio)}
