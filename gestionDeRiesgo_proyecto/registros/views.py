@@ -463,11 +463,7 @@ def crear_casa(request, barrio_id):
                 <input class="input_form"  type="text" name="numero_casa" placeholder="NÚMERO">
             </div>
             
-            <div>
-                <select class="form_select" name="calle" id="id_calle">
-                    <option value="" disabled selected hidden >Selecciona una calle</option>
-                    {''.join(options_calle)}
-                </select>            </div>
+            
             
             <div id="id_boton_enviar_form" >
                     <button class="btn_form_group" type="submit">enviar</button>
