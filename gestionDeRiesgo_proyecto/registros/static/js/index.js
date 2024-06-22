@@ -85,6 +85,8 @@ const CrearCasa = async(event) =>{
             mensaje = '<p>Casa creado con exito</p>';
             id_formulario_crear_casa.reset();
             id_form_crear_casa.style.display = 'none';
+
+            listarCasas(barrio);
         } else if (data.message == 'Error') {
             mensaje = '<p>Faltan Datos</p>';
         } else if (data.message == 'Exist') {
