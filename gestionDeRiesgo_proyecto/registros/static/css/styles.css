@@ -197,3 +197,7 @@ MENSAJE DE CONFIRMACIÓN
 .mensaje.show {
     opacity: 1;
 }
+
+.main_barrios .main_casas{
+    display: block;
+}

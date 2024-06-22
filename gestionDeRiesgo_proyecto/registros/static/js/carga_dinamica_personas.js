@@ -106,6 +106,8 @@ const listarDistritos = async (idDepartamento) => {
         const data = await response.json();
 
         if (data.message === 'Success'){
+            id_main_barrios.style.display = 'block';
+            id_main_casas.style.display = 'block';
             let opciones_p = ``;
             distritos = data.distritos;
             distritos.forEach((distrito) =>{
@@ -123,6 +125,9 @@ const listarDistritos = async (idDepartamento) => {
             }
         }else{
             console.log('no hay distritos');
+            id_opc_distritos.innerHTML = `<option value="">No hay distritos cargados.</option>`;
+            id_main_barrios.style.display = 'none';
+            id_main_casas.style.display = 'none';
         }
     }catch(error){
         console.log(error);
