@@ -1,13 +1,15 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    
+
 </head>
+
 <body>
     <div class="container">
         <div class="top">
@@ -15,62 +17,62 @@
         </div>
         <div class="bottom">
             <div class="opciones">
-               <div>
-                <div>
-                    <label for="id_opc_pais">Pais</label>
-                    <select class="opciones_select" name="id_opc_pais" id="id_opc_pais"></select>
-                </div>
-                <div>
-                    <label for="id_opc_provincias">Provincia</label>
-                    <select class="opciones_select" name="id_opc_provincias" id="id_opc_provincias"></select>
-                </div>
-                <div>
-                    <label for="id_opc_departamentos">Departamentos</label>
-                    <select class="opciones_select" name="id_opc_departamentos" id="id_opc_departamentos"></select>
-                </div>
-                
-                <div>
-                    <label for="id_opc_distritos">Distritos</label>
-                    <select class="opciones_select" name="id_opc_distritos" id="id_opc_distritos"></select>
-                </div>
-                <div>
-                    <label for="id_opc_ver_todo_distrito">Ver Todo</label>
-                    <input type="checkbox" name="id_opc_ver_todo_distrito" id="id_opc_ver_todo_distrito">
-                </div>
-               </div>
-                
-                
-                
-                
-                <div class="main_barrios" id="id_main_barrios">
+                <div class="main_opciones_grales">
                     <div>
-                        <label for="id_opc_barrios">Barrios</label>
-                        <select class="opciones_select"  name="id_opc_barrios" id="id_opc_barrios"></select>
+                        <label for="id_opc_pais">Pais</label>
+                        <select class="opciones_select" name="id_opc_pais" id="id_opc_pais"></select>
                     </div>
                     <div>
-                        <label for="id_opc_ver_todo_barrio">Ver Todo</label>
-                        <input type="checkbox" name="id_opc_ver_todo_barrio" id="id_opc_ver_todo_barrio">
+                        <label for="id_opc_provincias">Provincia</label>
+                        <select class="opciones_select" name="id_opc_provincias" id="id_opc_provincias"></select>
                     </div>
                     <div>
-                        <button class="btn_crear" id="id_btn_crear_barrio" class="bottom" >Crear Barrio</button>
-            
+                        <label for="id_opc_departamentos">Departamentos</label>
+                        <select class="opciones_select" name="id_opc_departamentos" id="id_opc_departamentos"></select>
+                    </div>
+
+                    <div>
+                        <label for="id_opc_distritos">Distritos</label>
+                        <select class="opciones_select" name="id_opc_distritos" id="id_opc_distritos"></select>
+                    </div>
+                    <div>
+                        <label for="id_opc_ver_todo_distrito">Ver Todo</label>
+                        <input type="checkbox" name="id_opc_ver_todo_distrito" id="id_opc_ver_todo_distrito">
+                    </div>
+                </div>
+                <div class="opc_barrio_casa" id="opciones_barrio_casa">
+                    <div class="main_c_b" id="id_main_barrios">
+                        <div>
+                            <label for="id_opc_barrios">Barrios</label>
+                            <select class="opciones_select" name="id_opc_barrios" id="id_opc_barrios"></select>
+                        </div>
+                        <div>
+                            <label for="id_opc_ver_todo_barrio">Ver Todo</label>
+                            <input type="checkbox" name="id_opc_ver_todo_barrio" id="id_opc_ver_todo_barrio">
+                        </div>
+                        <div>
+                            <button class="btn_crear" id="id_btn_crear_barrio" class="bottom">Crear Barrio</button>
+
+                        </div>
+
+                    </div>
+                    <div class="main_c_b" id="id_main_casas">
+                        <div>
+                            <label for="id_opc_casas">Casas</label>
+                            <select class="opciones_select" name="id_opc_casas" id="id_opc_casas"></select>
+                        </div>
+                        <div>
+                            <button class="btn_crear" id="id_btn_crear_casa" class="bottom">Crear Casa</button>
+
+                        </div>
+                    </div>
+                    <div class="main_t">
+                        <p>Dirección:</p>
                     </div>
                 </div>
 
-                <div class="main_casas" id="id_main_casas">
-                    <div>
-                        <label for="id_opc_casas">Casas</label>
-                        <select class="opciones_select" name="id_opc_casas" id="id_opc_casas"></select>
-                    </div>
-                    <div>
-                        <button class="btn_crear" id="id_btn_crear_casa" class="bottom" >Crear Casa</button>
-            
-                    </div>
-                </div>
-                <div id="id_html_form_crear">
 
-                </div>
-                
+
             </div>
             <div class="tabla_div">
                 <table class="styled-table">
@@ -90,7 +92,7 @@
                         </tr>
                     </thead>
                     <tbody id="id_tbody_personas">
-                        
+
                     </tbody>
                 </table>
             </div>
@@ -99,7 +101,7 @@
 
             <form action="" id="id_formulario_crear_barrio">
                 {% csrf_token %}
-                
+
                 <div id="id_content_crear_barrio"></div>
 
             </form>
@@ -109,25 +111,27 @@
             <form action="" id="id_formulario_crear_casa">
                 {% csrf_token %}
                 <div id="id_content_crear_casa"></div>
-                
+
             </form>
         </div>
-        
+
         <div class="mensaje" id="id_mensaje"></div>
-        
-        
+
+
     </div>
-    
-    
-    
-        <!-- <script src="{% static 'js/autocomplete.js' %}"></script> -->
-        
-   
 
 
-        <script src="{% static 'js/carga_dinamica_personas.js' %}"></script>
-        <script src="{% static 'js/index.js' %}"></script>
-        <footer><p>by Fabio Javier Flores for Cruz Roja Filial San Rafael</p></footer>
-    </body>
+
+    <!-- <script src="{% static 'js/autocomplete.js' %}"></script> -->
+
+
+
+
+    <script src="{% static 'js/carga_dinamica_personas.js' %}"></script>
+    <script src="{% static 'js/index.js' %}"></script>
+    <footer>
+        <p>by Fabio Javier Flores for Cruz Roja Filial San Rafael</p>
+    </footer>
+</body>
+
 </html>
-

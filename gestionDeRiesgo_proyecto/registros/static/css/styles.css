@@ -41,6 +41,7 @@ footer {
 .bottom{
     align-items: center;
     width: 100%;
+    
 }
 .opciones{
     font-family: Arial, Helvetica, sans-serif;
@@ -48,9 +49,27 @@ footer {
     display: flex;
    margin-left: 5%;
     padding: 2%;
-
-    
+         
 }
+.main_opciones_grales{
+    background-color: green;
+}
+.opc_barrio_casa{
+    display: flex;
+}
+.main_c_b{
+    flex: 1 1 50%;
+}
+.main_t{
+    flex-basis: 100%;
+}
+.inner_opciones{
+   display: flex;
+   margin-top: 0;
+       
+}
+
+
 .opciones div{
     margin: 18px;
 }
@@ -198,6 +217,3 @@ MENSAJE DE CONFIRMACIÓN
     opacity: 1;
 }
 
-.main_barrios .main_casas{
-    display: block;
-}
